@@ -1,0 +1,88 @@
+#database iris loaded as IRIS
+View(IRIS)
+
+#population means and vars
+pop_sep_len_mean <- mean(IRIS$SepalLengthCm)
+pop_sep_len_var <- var(IRIS$SepalLengthCm)
+pop_sep_wid_mean <- mean(IRIS$SepalWidthCm)
+pop_sep_wid_var <- var(IRIS$SepalWidthCm)
+pop_pet_len_mean <- mean(IRIS$PetalLengthCm)
+pop_pet_len_var <- var(IRIS$PetalLengthCm)
+pop_pet_wid_mean <- mean(IRIS$PetalWidthCm)
+pop_pet_wid_var <- var(IRIS$PetalWidthCm)
+print(pop_sep_len_mean)
+print(pop_sep_len_var)
+print(pop_sep_wid_mean)
+print(pop_sep_wid_var)
+print(pop_pet_len_mean)
+print(pop_pet_len_var)
+print(pop_pet_wid_mean)
+print(pop_pet_wid_var)
+
+getSample <- function(tab, size){
+  return (tab[sample(1:nrow(tab), size, replace = FALSE),])
+}
+
+samp <- getSample(IRIS, 50)
+
+samp_sep_len_mean <- mean(samp$SepalLengthCm)
+samp_sep_len_var <- var(samp$SepalLengthCm)
+samp_sep_wid_mean <- mean(samp$SepalWidthCm)
+samp_sep_wid_var <- var(samp$SepalWidthCm)
+samp_pet_len_mean <- mean(samp$PetalLengthCm)
+samp_pet_len_var <- var(samp$PetalLengthCm)
+samp_pet_wid_mean <- mean(samp$PetalWidthCm)
+samp_pet_wid_var <- var(samp$PetalWidthCm)
+print(samp_sep_len_mean)
+print(samp_sep_len_var)
+print(samp_sep_wid_mean)
+print(samp_sep_wid_var)
+print(samp_pet_len_mean)
+print(samp_pet_len_var)
+print(samp_pet_wid_mean)
+print(samp_pet_wid_var)
+
+getSampDist <- function(size){
+  dist.sep.len=c()
+  dist.sep.wid=c()
+  dist.pet.len=c()
+  dist.pet.wid=c()
+  for(i in 1:500)
+  {
+    samp <- getSample(IRIS, size)
+    mean.sep.len <- mean(samp$SepalLengthCm)
+    mean.sep.wid <- mean(samp$SepalWidthCm)
+    mean.pet.len <- mean(samp$PetalLengthCm)
+    mean.pet.wid <- mean(samp$PetalWidthCm)
+    dist.sep.len <- c(dist.sep.len, mean.sep.len)
+    dist.sep.wid <- c(dist.sep.wid, mean.sep.wid)
+    dist.pet.len <- c(dist.pet.len, mean.pet.len)
+    dist.pet.wid <- c(dist.pet.wid, mean.pet.wid)
+  }
+  par(mfrow = c(2, 2))
+  hist(dist.sep.len, breaks = 15, xlim = c(min(IRIS$SepalLengthCm), max(IRIS$SepalLengthCm)), freq = FALSE, xlab = "Sample mean of Sepal Length(cm)", main = paste("Distribution Sepal Length-Sample size = ", size))
+  curve(dnorm(x,mean(dist.sep.len),sd(dist.sep.len)),lwd=2,add=TRUE)
+  abline(v = pop_sep_len_mean, col = "red", lwd = 2)
+  hist(dist.sep.wid, breaks = 15, xlim = c(min(IRIS$SepalWidthCm), max(IRIS$SepalWidthCm)), freq = FALSE, xlab = "Sample mean of Sepal Width(cm)", main = paste("Distribution Sepal Width-Sample size = ", size))
+  curve(dnorm(x,mean(dist.sep.wid),sd(dist.sep.wid)),lwd=2,add=TRUE)
+  abline(v = pop_sep_wid_mean, col = "red", lwd = 2)
+  hist(dist.pet.len, breaks = 15, xlim = c(min(IRIS$PetalLengthCm), max(IRIS$PetalLengthCm)), freq = FALSE, xlab = "Sample mean of Petal Length(cm)", main = paste("Distribution Petal Legth-Sample size = ", size))
+  curve(dnorm(x,mean(dist.pet.len),sd(dist.pet.len)),lwd=2,add=TRUE)
+  abline(v = pop_pet_len_mean, col = "red", lwd = 2)
+  hist(dist.pet.wid, breaks = 15, xlim = c(min(IRIS$PetalWidthCm), max(IRIS$PetalWidthCm)), freq = FALSE, xlab = "Sample mean of Petal Width(cm)", main = paste("Distribution Petal Width-Sample size = ", size))
+  curve(dnorm(x,mean(dist.pet.wid),sd(dist.pet.wid)),lwd=2,add=TRUE)
+  abline(v = pop_pet_wid_mean, col = "red", lwd = 2)
+}
+
+getSampDist(1)
+getSampDist(2)
+getSampDist(10)
+getSampDist(20)
+getSampDist(50)
+getSampDist(80)
+getSampDist(100)
+getSampDist(120)
+getSampDist(140)
+getSampDist(149)
+
+
